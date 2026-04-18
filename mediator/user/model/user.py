@@ -13,6 +13,7 @@ from config.database.base import Base
 
 class UserStatus(str, Enum):
     """Lifecycle status of a user account."""
+
     ACTIVE = "active"
     SUSPENDED = "suspended"
     DELETED = "deleted"
@@ -20,6 +21,7 @@ class UserStatus(str, Enum):
 
 class AuthProvider(str, Enum):
     """How the user signed up."""
+
     EMAIL = "email"
     GOOGLE = "google"
     APPLE = "apple"

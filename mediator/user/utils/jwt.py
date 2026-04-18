@@ -5,7 +5,9 @@ import uuid
 from config.settings import get_settings
 
 
-def create_access_token(user_id: uuid.UUID, expires_delta: Optional[timedelta] = None) -> str:
+def create_access_token(
+    user_id: uuid.UUID, expires_delta: Optional[timedelta] = None
+) -> str:
     """Create JWT access token."""
     settings = get_settings()
     now = datetime.now(timezone.utc)
@@ -29,7 +31,9 @@ def create_access_token(user_id: uuid.UUID, expires_delta: Optional[timedelta] =
     )
 
 
-def create_refresh_token(user_id: uuid.UUID, expires_delta: Optional[timedelta] = None) -> str:
+def create_refresh_token(
+    user_id: uuid.UUID, expires_delta: Optional[timedelta] = None
+) -> str:
     """Create JWT refresh token."""
     settings = get_settings()
     now = datetime.now(timezone.utc)

@@ -5,8 +5,18 @@ from uuid import UUID
 from datetime import datetime, timedelta, timezone
 
 from mediator.user.model import User, UserOTP, UserSession
-from mediator.user.schemas.response import UserPublicResponse, UserResponse, AuthResponse, TokenResponse, MessageResponse
-from mediator.user.schemas.request import RequestOTPRequest, VerifyOTPRequest, LogoutRequest
+from mediator.user.schemas.response import (
+    UserPublicResponse,
+    UserResponse,
+    AuthResponse,
+    TokenResponse,
+    MessageResponse,
+)
+from mediator.user.schemas.request import (
+    RequestOTPRequest,
+    VerifyOTPRequest,
+    LogoutRequest,
+)
 from mediator.user.utils import create_access_token, create_refresh_token
 from config.settings import get_settings
 from config.database import get_db
@@ -115,11 +125,16 @@ async def verify_otp(
         )
 
     # Find valid OTP
-    stmt = select(UserOTP).where(
-        (UserOTP.user_id == user.id)
-        & (UserOTP.email == request.email)
-        & (UserOTP.is_used == False)
-    ).order_by(UserOTP.created_at.desc()).limit(1)
+    stmt = (
+        select(UserOTP)
+        .where(
+            (UserOTP.user_id == user.id)
+            & (UserOTP.email == request.email)
+            & (UserOTP.is_used == False)
+        )
+        .order_by(UserOTP.created_at.desc())
+        .limit(1)
+    )
 
     result = await db.execute(stmt)
     otp = result.scalar_one_or_none()
@@ -156,7 +171,9 @@ async def verify_otp(
     refresh_token = create_refresh_token(user.id)
 
     # Create session
-    expires_at = datetime.now(timezone.utc) + timedelta(hours=settings.jwt_expiration_hours)
+    expires_at = datetime.now(timezone.utc) + timedelta(
+        hours=settings.jwt_expiration_hours
+    )
     session = UserSession(
         user_id=user.id,
         access_token=access_token,

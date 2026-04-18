@@ -6,6 +6,7 @@ from router.router import configure_app_cors, create_main_router
 
 settings = get_settings()
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     setup_logging()
@@ -15,6 +16,7 @@ async def lifespan(app: FastAPI):
     yield
 
     print("🛑 Ghost Mode API shutting down")
+
 
 app = FastAPI(
     title="Ghost Mode API",

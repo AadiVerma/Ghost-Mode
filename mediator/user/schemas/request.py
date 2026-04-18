@@ -9,8 +9,10 @@ from mediator.user.model import AuthProvider
 
 # ---------- Signup / Create ----------
 
+
 class UserSignupRequest(BaseModel):
     """Email + password signup."""
+
     email: EmailStr
     display_name: str | None = Field(default=None, max_length=120)
     timezone: str = Field(default="UTC", max_length=64)
@@ -28,6 +30,7 @@ class UserSignupRequest(BaseModel):
 
 class UserOAuthSignupRequest(BaseModel):
     """Google / Apple signup — token verified separately."""
+
     provider: AuthProvider
     oauth_token: str
     timezone: str = Field(default="UTC", max_length=64)
@@ -38,27 +41,33 @@ class UserOAuthSignupRequest(BaseModel):
 
 class AnonymousUserCreateRequest(BaseModel):
     """Day 1 flow — no auth, just a session cookie."""
+
     timezone: str = Field(default="UTC", max_length=64)
     has_accepted_emotional_disclaimer: bool = True
 
 
 # ---------- OTP ----------
 
+
 class RequestOTPRequest(BaseModel):
     """Request OTP for login/signup."""
+
     email: EmailStr
 
 
 class VerifyOTPRequest(BaseModel):
     """Verify OTP and login/signup."""
+
     email: EmailStr
     otp_code: str = Field(min_length=6, max_length=6, pattern="^[0-9]{6}$")
 
 
 # ---------- Update ----------
 
+
 class UserUpdateRequest(BaseModel):
     """Fields a user is allowed to change about themselves."""
+
     display_name: str | None = Field(default=None, max_length=120)
     avatar_url: str | None = Field(default=None, max_length=512)
     timezone: str | None = Field(default=None, max_length=64)
@@ -78,6 +87,7 @@ class UserPasswordChangeRequest(BaseModel):
 
 class UpgradeAnonymousRequest(BaseModel):
     """Convert an anonymous user into a real account."""
+
     email: EmailStr
     password: str = Field(min_length=8, max_length=128)
     display_name: str | None = Field(default=None, max_length=120)
@@ -85,9 +95,11 @@ class UpgradeAnonymousRequest(BaseModel):
 
 # ---------- Account actions ----------
 
+
 class UserDeleteRequest(BaseModel):
     """Soft delete — requires explicit confirmation on an emotional product."""
-    password: str | None = None   # null for anonymous / OAuth users
+
+    password: str | None = None  # null for anonymous / OAuth users
     confirmation_phrase: str = Field(
         description='Must match exactly: "delete my ghost"',
     )
@@ -106,4 +118,5 @@ class EmailVerificationRequest(BaseModel):
 
 class LogoutRequest(BaseModel):
     """Logout request with session ID."""
+
     id: str

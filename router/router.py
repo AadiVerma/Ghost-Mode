@@ -9,7 +9,6 @@ def create_main_router() -> APIRouter:
     return main_router
 
 
-
 def configure_app_cors(app) -> None:
     """
     Configure CORS for the FastAPI application.
