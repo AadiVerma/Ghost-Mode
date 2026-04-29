@@ -9,6 +9,10 @@ from alembic import context
 from config.settings import get_settings
 from config.database.base import Base
 from mediator.user.model import User, UserOTP, UserSession
+from mediator.upload.model import Upload
+from mediator.message.model import Message
+from mediator.persona.model import Persona
+from mediator.session.model import Session, SessionMessage
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
